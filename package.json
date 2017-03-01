@@ -1,0 +1,65 @@
+{
+  "name": "antd-search-box",
+  "version": "0.1.0",
+  "description": "An ant design based search box",
+  "main": "lib/index.js",
+  "files": [
+    "lib",
+    "assets/*.css"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alex1990/antd-search-box.git"
+  },
+  "keywords": [
+    "search",
+    "search-box",
+    "antd-component"
+  ],
+  "author": "Alex Chao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Alex1990/antd-search-box/issues"
+  },
+  "homepage": "https://github.com/Alex1990/antd-search-box#readme",
+  "config": {
+    "port": 8002
+  },
+  "scripts": {
+    "build": "rc-tools run build",
+    "gh-pages": "rc-tools run gh-pages",
+    "start": "rc-tools run server",
+    "pub": "rc-tools run pub --babel-runtime",
+    "lint": "rc-tools run lint",
+    "karma": "rc-tools run karma",
+    "saucelabs": "rc-tools run saucelabs",
+    "test": "jest",
+    "updateSn": "jest --updateSnapshot",
+    "chrome-test": "rc-tools run chrome-test",
+    "coverage": "jest --coverage && cat ./coverage/lcov.info | coveralls"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/*"
+    ]
+  },
+  "devDependencies": {
+    "coveralls": "^2.11.16",
+    "enzyme": "^2.7.1",
+    "enzyme-to-json": "^1.5.0",
+    "expect.js": "~0.3.1",
+    "jest": "^19.0.2",
+    "pre-commit": "1.x",
+    "rc-tools": "5.x",
+    "react": "15.x",
+    "react-addons-test-utils": "15.x",
+    "react-dom": "15.x"
+  },
+  "pre-commit": [
+    "lint"
+  ],
+  "dependencies": {
+    "babel-runtime": "6.x",
+    "classnames": "2.x"
+  }
+}
