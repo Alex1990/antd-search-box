@@ -1,0 +1,33 @@
+.antd-search-box {
+  position: relative;
+
+  .ant-input-prefix > i {
+    font-size: 14px;
+  }
+
+  .ant-input-suffix {
+    color: #aaa;
+
+    &:hover {
+      color: #444;
+    }
+
+    > i {
+      font-size: 14px;
+    }
+  }
+
+  &.antd-search-box-small .ant-input-prefix,
+  &.antd-search-box-small .ant-input-suffix {
+    > i {
+      font-size: 12px;
+    }
+  }
+
+  &.antd-search-box-large .ant-input-suffix,
+  &.antd-search-box-large .ant-input-suffix {
+    > i {
+      font-size: 16px;
+    }
+  }
+}
