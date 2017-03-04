@@ -42,7 +42,7 @@
     "babel-polyfill": "^6.23.0",
     "expect.js": "~0.3.1",
     "pre-commit": "1.x",
-    "rc-tools": "git+ssh://git@github.com:Alex1990/rc-tools.git",
+    "rc-tools": "github:alex1990/rc-tools",
     "rc-util": "^4.0.2",
     "react": "15.x",
     "react-addons-test-utils": "15.x",
