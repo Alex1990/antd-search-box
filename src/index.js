@@ -12,7 +12,9 @@ class SearchBox extends Component {
     value: PropTypes.string,
     placeholder: PropTypes.string,
     size: PropTypes.oneOf(['small', 'default', 'large']),
+    autoFocus: PropTypes.bool,
     disabled: PropTypes.bool,
+    readOnly: PropTypes.bool,
     onChange: PropTypes.func,
     onSearch: PropTypes.func,
   };
@@ -26,9 +28,17 @@ class SearchBox extends Component {
   constructor(props) {
     super(props);
     const { defaultValue, value } = props;
+    let currentValue = '';
+
+    if (value !== undefined) {
+      currentValue = value;
+    } else if (defaultValue !== undefined) {
+      currentValue = defaultValue;
+    }
+
 
     this.state = {
-      value: value !== undefined ? value : defaultValue,
+      value: currentValue,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -47,8 +57,8 @@ class SearchBox extends Component {
   handleClear() {
     const onChange = this.props.onChange;
 
-    this.setState({ value: undefined });
-    if (onChange) onChange(undefined);
+    this.setState({ value: '' });
+    if (onChange) onChange('');
   }
 
   handlePressEnter() {
@@ -66,23 +76,41 @@ class SearchBox extends Component {
       placeholder,
       size,
       disabled,
+      readOnly,
+      autoFocus,
     } = this.props;
 
     const cls = classnames({
       [prefixCls]: 1,
-      [`${prefixCls}-${size}`]: 1,
+      [`${prefixCls}-sm`]: size === 'small',
+      [`${prefixCls}-lg`]: size === 'large',
       [`${prefixCls}-disabled`]: !!disabled,
       [className]: !!className,
     });
 
+    let clearButton;
+
+    if (value) {
+      clearButton = (
+        <Icon
+          ref={el => this.clearButton = el }
+          type="close-circle"
+          onClick={this.handleClear}
+        />
+      );
+    }
+
     const inputProps = {
+      ref: el => this.antdInput = el,
       prefix: <Icon type="search" />,
-      suffix: value ? <Icon type="close-circle" onClick={this.handleClear}/> : undefined,
+      suffix: clearButton,
       defaultValue,
       value,
       placeholder,
       size,
       disabled,
+      readOnly,
+      autoFocus,
       onChange: this.handleInputChange,
       onPressEnter: this.handlePressEnter,
     };

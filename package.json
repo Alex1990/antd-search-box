@@ -32,26 +32,18 @@
     "pub": "rc-tools run pub --babel-runtime",
     "lint": "rc-tools run lint",
     "karma": "rc-tools run karma",
+    "test": "rc-tools run test",
     "saucelabs": "rc-tools run saucelabs",
-    "test": "jest",
-    "updateSn": "jest --updateSnapshot",
     "chrome-test": "rc-tools run chrome-test",
-    "coverage": "jest --coverage && cat ./coverage/lcov.info | coveralls"
-  },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/*"
-    ]
+    "coverage": "rc-tools run coverage"
   },
   "devDependencies": {
     "antd": "^2.7.4",
-    "coveralls": "^2.11.16",
-    "enzyme": "^2.7.1",
-    "enzyme-to-json": "^1.5.0",
+    "babel-polyfill": "^6.23.0",
     "expect.js": "~0.3.1",
-    "jest": "^19.0.2",
     "pre-commit": "1.x",
     "rc-tools": "git+ssh://git@github.com:Alex1990/rc-tools.git",
+    "rc-util": "^4.0.2",
     "react": "15.x",
     "react-addons-test-utils": "15.x",
     "react-dom": "15.x"
