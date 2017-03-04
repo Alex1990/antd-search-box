@@ -22,6 +22,14 @@ class App extends Component {
     this.setState({ keyword: value });
   }
 
+  handleFocus() {
+    console.log('focus event');
+  }
+
+  handleBlur() {
+    console.log('blur event');
+  }
+
   render() {
     const { value, keyword } = this.state;
     return (
@@ -32,6 +40,8 @@ class App extends Component {
           <SearchBox
             value={value}
             placeholder="Type the keyword"
+            onFocus={this.handleFocus.bind(this)}
+            onBlur={this.handleBlur.bind(this)}
             onChange={this.handleChange.bind(this)}
             onSearch={this.handleSearch.bind(this)}
           />

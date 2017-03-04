@@ -48,40 +48,61 @@ class SearchBox extends Component {
     this.state = {
       value: currentValue,
       isFocus: false,
+      isClearing: false,
     };
 
     this.handleFocus = this.handleFocus.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleClear = this.handleClear.bind(this);
+    this.handleMouseDown = this.handleMouseDown.bind(this);
+    this.handleMouseLeave = this.handleMouseLeave.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.handlePressEnter = this.handlePressEnter.bind(this);
   }
 
+  getClearButton() {
+  }
+
   handleFocus(e) {
-    this.setState({ isFocus: true });
-    const onFocus = this.props.onFocus;
-    if (onFocus) onFocus(e);
+    if (!this.state.isClearing) {
+      this.setState({ isFocus: true });
+      const onFocus = this.props.onFocus;
+      if (onFocus) onFocus(e);
+    }
   }
 
   handleBlur(e) {
-    this.setState({ isFocus: false });
-    const onBlur = this.props.onBlur;
-    if (onBlur) onBlur(e);
+    if (!this.state.isClearing) {
+      this.setState({ isFocus: false });
+      const onBlur = this.props.onBlur;
+      if (onBlur) onBlur(e);
+    }
   }
 
   handleInputChange(e) {
     const value = e.target.value;
-    const onChange = this.props.onChange;
-
-    this.setState({ value });
-    if (onChange) onChange(value);
+    this.setState({ value }, () => {
+      const onChange = this.props.onChange;
+      if (onChange) onChange(value);
+    });
   }
 
-  handleClear() {
-    const onChange = this.props.onChange;
+  handleMouseDown() {
+    this.setState({ isClearing: true });
+  }
 
-    this.setState({ value: '' });
-    if (onChange) onChange('');
+  handleMouseLeave() {
+    this.antdInput.refs.input.focus();
+    this.setState({ isClearing: false });
+  }
+
+  handleClick() {
+    this.setState({ value: '' }, () => {
+      const onChange = this.props.onChange;
+      if (onChange) onChange('');
+      this.antdInput.refs.input.focus();
+      this.setState({ isClearing: false });
+    });
   }
 
   handlePressEnter() {
@@ -111,7 +132,9 @@ class SearchBox extends Component {
       clearButton = (
         <span
           ref={el => this.clearButton = el}
-          onMouseDown={this.handleClear}
+          onMouseDown={this.handleMouseDown}
+          onMouseLeave={this.handleMouseLeave}
+          onClick={this.handleClick}
         >
           <Icon type="close-circle" />
         </span>

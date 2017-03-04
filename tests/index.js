@@ -19,6 +19,8 @@ describe('SearchBox', () => {
   let onChangeCallCount = 0;
   let onSearchFirstArgument;
   let onSearchCallCount = 0;
+  let onFocusCallCount = 0;
+  let onBlurCallCount = 0;
 
   class Component extends React.Component {
 
@@ -45,6 +47,14 @@ describe('SearchBox', () => {
       this.setState({ searchValue: value });
     }
 
+    onFocus() {
+      onFocusCallCount += 1;
+    }
+
+    onBlur() {
+      onBlurCallCount += 1;
+    }
+
     setProp(propName, propValue) {
       this.setState({
         [propName]: propValue,
@@ -62,6 +72,8 @@ describe('SearchBox', () => {
             disabled={disabled}
             readOnly={readOnly}
             autoFocus={autoFocus}
+            onFocus={this.onFocus.bind(this)}
+            onBlur={this.onBlur.bind(this)}
             onChange={this.onChange.bind(this)}
             onSearch={this.onSearch.bind(this)}
           />
@@ -86,6 +98,8 @@ describe('SearchBox', () => {
     onChangeCallCount = 0;
     onSearchFirstArgument = undefined;
     onSearchCallCount = 0;
+    onFocusCallCount = 0;
+    onBlurCallCount = 0;
   });
 
   describe('check props works', () => {
@@ -182,9 +196,19 @@ describe('SearchBox', () => {
     it('input value is empty when click the clear button', () => {
       Simulate.focus(inputElement);
       Simulate.change(inputElement, { target: { value: 'a' } });
-      Simulate.mouseDown(searchBox.clearButton);
+      Simulate.click(searchBox.clearButton);
       expect(inputElement.value).to.be('');
       expect(searchBox.clearButton).to.be(null);
+    });
+
+    it('The onFocus and onBlur should not be called when click the clear button', () => {
+      Simulate.focus(inputElement);
+      Simulate.change(inputElement, { target: { value: 'a' } });
+      const focusCount = onFocusCallCount;
+      const blurCount = onBlurCallCount;
+      Simulate.click(searchBox.clearButton);
+      expect(onFocusCallCount).to.be(focusCount);
+      expect(onBlurCallCount).to.be(blurCount);
     });
   });
 
@@ -194,6 +218,7 @@ describe('SearchBox', () => {
       Simulate.change(inputElement, { target: { value: 'a' } });
       Simulate.keyDown(inputElement, { keyCode: keyCode.ENTER });
       expect(onSearchFirstArgument).to.be('a');
+      expect(onSearchCallCount).to.be(1);
     });
 
     it('onSearch should not be called when input only', () => {

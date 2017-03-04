@@ -80,6 +80,18 @@ ReactDOM.render(<App />, document.getElementById('__react-content'));
     </thead>
     <tbody>
       <tr>
+          <td>className</td>
+          <td>String</td>
+          <th><code>""</code></th>
+          <td>Set the `SearchBox` className.</td>
+      </tr>
+      <tr>
+          <td>style</td>
+          <td>Object</td>
+          <th><code>{}</code></th>
+          <td>Set the `SearchBox` style prop.</td>
+      </tr>
+      <tr>
           <td>defaultValue</td>
           <td>String</td>
           <th></th>
@@ -123,6 +135,8 @@ ReactDOM.render(<App />, document.getElementById('__react-content'));
       </tr>
     </tbody>
 </table>
+
+The other props will be as the Ant Design `Input`'s props.
 
 ## Development
 
