@@ -154,15 +154,15 @@ describe('SearchBox', () => {
 
   describe('clear button', () => {
     it('hide clear button', () => {
-      expect(searchBox.clearButton).to.be(undefined);
+      expect(searchBox.clearButton).to.be(null);
       Simulate.focus(inputElement);
-      expect(searchBox.clearButton).to.be(undefined);
+      expect(searchBox.clearButton).to.be(null);
     });
 
     it('show clear button', () => {
       Simulate.focus(inputElement);
       Simulate.change(inputElement, { target: { value: 'a' } });
-      expect(TestUtils.isCompositeComponent(searchBox.clearButton)).to.be(true);
+      expect(TestUtils.isDOMComponent(searchBox.clearButton)).to.be(true);
     });
 
     it('hide clear button when input value is empty', () => {
@@ -176,6 +176,14 @@ describe('SearchBox', () => {
       Simulate.focus(inputElement);
       Simulate.change(inputElement, { target: { value: 'a' } });
       Simulate.blur(inputElement);
+      expect(searchBox.clearButton).to.be(null);
+    });
+
+    it('input value is empty when click the clear button', () => {
+      Simulate.focus(inputElement);
+      Simulate.change(inputElement, { target: { value: 'a' } });
+      Simulate.mouseDown(searchBox.clearButton);
+      expect(inputElement.value).to.be('');
       expect(searchBox.clearButton).to.be(null);
     });
   });

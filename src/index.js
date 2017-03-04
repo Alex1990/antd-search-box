@@ -1,27 +1,36 @@
 import React, { Component, PropTypes } from 'react';
 import { Input, Icon } from 'antd';
-import classnames from 'classnames';
+import classNames from 'classnames';
+import omit from 'omit.js';
 
 class SearchBox extends Component {
 
   static propTypes = {
-    className: PropTypes.string,
-    style: PropTypes.object,
     prefixCls: PropTypes.string,
+    className: PropTypes.string,
+    id: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]),
+    name: PropTypes.string,
+    style: PropTypes.object,
     defaultValue: PropTypes.string,
     value: PropTypes.string,
     placeholder: PropTypes.string,
     size: PropTypes.oneOf(['small', 'default', 'large']),
-    autoFocus: PropTypes.bool,
     disabled: PropTypes.bool,
     readOnly: PropTypes.bool,
+    autoFocus: PropTypes.bool,
+    autoComplete: PropTypes.oneOf(['on', 'off']),
+    onFocus: PropTypes.func,
+    onBlur: PropTypes.func,
     onChange: PropTypes.func,
     onSearch: PropTypes.func,
   };
 
   static defaultProps = {
-    style: {},
     prefixCls: 'antd-search-box',
+    style: {},
     size: 'default',
   };
 
@@ -36,14 +45,28 @@ class SearchBox extends Component {
       currentValue = defaultValue;
     }
 
-
     this.state = {
       value: currentValue,
+      isFocus: false,
     };
 
+    this.handleFocus = this.handleFocus.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleClear = this.handleClear.bind(this);
     this.handlePressEnter = this.handlePressEnter.bind(this);
+  }
+
+  handleFocus(e) {
+    this.setState({ isFocus: true });
+    const onFocus = this.props.onFocus;
+    if (onFocus) onFocus(e);
+  }
+
+  handleBlur(e) {
+    this.setState({ isFocus: false });
+    const onBlur = this.props.onBlur;
+    if (onBlur) onBlur(e);
   }
 
   handleInputChange(e) {
@@ -67,59 +90,56 @@ class SearchBox extends Component {
   }
 
   render() {
-    const { value } = this.state;
+    const { value, isFocus } = this.state;
     const {
+      prefixCls,
       className,
       style,
-      prefixCls,
-      defaultValue,
-      placeholder,
       size,
-      disabled,
-      readOnly,
-      autoFocus,
     } = this.props;
 
-    const cls = classnames({
+    const cls = classNames({
       [prefixCls]: 1,
       [`${prefixCls}-sm`]: size === 'small',
       [`${prefixCls}-lg`]: size === 'large',
-      [`${prefixCls}-disabled`]: !!disabled,
       [className]: !!className,
     });
 
     let clearButton;
 
-    if (value) {
+    if (value && isFocus) {
       clearButton = (
-        <Icon
-          ref={el => this.clearButton = el }
-          type="close-circle"
-          onClick={this.handleClear}
-        />
+        <span
+          ref={el => this.clearButton = el}
+          onMouseDown={this.handleClear}
+        >
+          <Icon type="close-circle" />
+        </span>
       );
+    } else {
+      this.clearButton = null;
     }
 
-    const inputProps = {
+    const inputProps = omit({
+      ...this.props,
+      value,
       ref: el => this.antdInput = el,
       prefix: <Icon type="search" />,
       suffix: clearButton,
-      defaultValue,
-      value,
-      placeholder,
-      size,
-      disabled,
-      readOnly,
-      autoFocus,
+      onFocus: this.handleFocus,
+      onBlur: this.handleBlur,
       onChange: this.handleInputChange,
       onPressEnter: this.handlePressEnter,
-    };
+    }, [
+      'prefixCls',
+      'className',
+      'style',
+      'onSearch',
+    ]);
 
     return (
       <span className={cls} style={style}>
-        <span className={`${prefixCls}-input`}>
-          <Input {...inputProps} />
-        </span>
+        <Input {...inputProps} />
       </span>
     );
   }
