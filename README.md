@@ -2,6 +2,20 @@
 
 An ant design based search box.
 
+[![NPM version][npm-image]][npm-url]
+[![build status][travis-image]][travis-url]
+[![Test coverage][coveralls-image]][coveralls-url]
+[![gemnasium deps][gemnasium-image]][gemnasium-url]
+[![node version][node-image]][node-url]
+[![npm download][download-image]][download-url]
+
+[npm-image]: http://img.shields.io/npm/v/antd-search-box.svg?style=flat-square
+[npm-url]: http://npmjs.org/package/antd-search-box
+[travis-image]: https://img.shields.io/travis/Alex1990/antd-search-box.svg?style=flat-square
+[travis-url]: https://travis-ci.org/Alex1990/antd-search-box
+[coveralls-image]: https://img.shields.io/coveralls/Alex1990/antd-search-box.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/r/Alex1990/antd-search-box?branch=master
+
 ## Examples
 
 http://localhost:8002/examples
