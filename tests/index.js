@@ -3,7 +3,7 @@
 // Skip the issue https://github.com/ariya/phantomjs/issues/14211
 require('babel-polyfill');
 require('../assets/index.less');
-const keyCode = require('rc-util/lib/keyCode');
+const keyCode = require('rc-util/lib/KeyCode');
 const expect = require('expect.js');
 const SearchBox = require('../index');
 const React = require('react');
