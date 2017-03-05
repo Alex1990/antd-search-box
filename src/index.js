@@ -60,14 +60,13 @@ class SearchBox extends Component {
     this.handlePressEnter = this.handlePressEnter.bind(this);
   }
 
-  getClearButton() {
-  }
-
   handleFocus(e) {
     if (!this.state.isClearing) {
       this.setState({ isFocus: true });
       const onFocus = this.props.onFocus;
-      if (onFocus) onFocus(e);
+      if (onFocus) {
+        onFocus(e);
+      }
     }
   }
 
@@ -75,7 +74,9 @@ class SearchBox extends Component {
     if (!this.state.isClearing) {
       this.setState({ isFocus: false });
       const onBlur = this.props.onBlur;
-      if (onBlur) onBlur(e);
+      if (onBlur) {
+        onBlur(e);
+      }
     }
   }
 
@@ -83,7 +84,9 @@ class SearchBox extends Component {
     const value = e.target.value;
     this.setState({ value }, () => {
       const onChange = this.props.onChange;
-      if (onChange) onChange(value);
+      if (onChange) {
+        onChange(value);
+      }
     });
   }
 
@@ -99,7 +102,9 @@ class SearchBox extends Component {
   handleClick() {
     this.setState({ value: '' }, () => {
       const onChange = this.props.onChange;
-      if (onChange) onChange('');
+      if (onChange) {
+        onChange('');
+      }
       this.antdInput.refs.input.focus();
       this.setState({ isClearing: false });
     });
@@ -107,7 +112,9 @@ class SearchBox extends Component {
 
   handlePressEnter() {
     const onSearch = this.props.onSearch;
-    if (onSearch) onSearch(this.state.value);
+    if (onSearch) {
+      onSearch(this.state.value);
+    }
   }
 
   render() {
